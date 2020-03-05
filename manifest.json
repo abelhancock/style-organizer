@@ -1,0 +1,7 @@
+{
+  "name": "Style Organizer",
+  "id": "816627069580757929",
+  "api": "1.0.0",
+  "main": "code.js",
+  "ui": "ui.html"
+}
