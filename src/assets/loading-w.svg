@@ -1,0 +1,11 @@
+<svg width="80" height="28" viewBox="0 0 80 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <ellipse id="e1" cx="14" cy="14" rx="6" ry="6" fill="#FFFFFF">
+        <animate attributeType="CSS" attributeName="opacity" values="0;.6;1;.6;0" dur="1s" repeatCount="indefinite"/>
+    </ellipse>
+    <ellipse id="e2" cx="40" cy="14" rx="6" ry="6" fill="#FFFFFF">
+        <animate attributeType="CSS" attributeName="opacity" begin=".2s" values="0;.6;1;.6;0" dur="1s" repeatCount="indefinite"/>
+    </ellipse>
+    <ellipse id="e3" cx="66" cy="14" rx="6" ry="6" fill="#FFFFFF">
+        <animate attributeType="CSS" attributeName="opacity" begin=".4s" values="0;.6;1;.6;0" dur="1s" repeatCount="indefinite"/>
+    </ellipse>
+</svg>
