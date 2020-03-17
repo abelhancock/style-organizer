@@ -157,13 +157,44 @@ input:focus { box-shadow: inset 0 0 0 2px $blue; }
                 }        
        
             }
+
+            .merge-selection{
+                background-color: $black1;
+            }
             .color-box {
-                width: 14px;
-                height: 14px;
-                border-radius: 2px;
-                border: solid 1px $black1;
+                width: 16px;
+                height: 16px;
+                position: relative;
+//                border: 1px SOLID $black1;
                 float:left;
+                border-radius:2px;
                 margin-right: 8px;
+                overflow: hidden;
+                .color-full{
+                    width: 16px;
+                    height: 16px;
+                    position: absolute;
+                    left: 0;
+                    top: 0;
+                    border-radius:2px;
+                    overflow: hidden;
+                }
+                .color-opaque{
+                    width: 8px;
+                    height: 16px;
+                    position: absolute;
+                    left: 0;
+                    top: 0;
+                    border-radius:2px 0 0 2px; 
+                }
+                .color-rgba{
+                    width: 8px;
+                    height: 16px;
+                    position: absolute;
+                    left: 8;
+                    top: 0;
+                    border-radius:0 2px 2px 0; 
+                }
             }
             .hex-value{
                 width: 56px;
@@ -260,6 +291,13 @@ input:focus { box-shadow: inset 0 0 0 2px $blue; }
     background-color: white;
     box-shadow: 0 -2px 4px $black1;
     .button-wrapper{
-        margin: 5px 20px;
+        width: 140px;
+        float:right;
+        margin: 5px 20px 5px 0;
+    }
+    .bottom-message{
+        @include UI;
+        margin: 12px 0 12px 20px;
+        float: left;
     }
 }

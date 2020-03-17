@@ -66,7 +66,7 @@ class Illustration extends React.Component{
         return(
 <svg width="260" height="200" viewBox="0 0 260 200" fill="none" xmlns="http://www.w3.org/2000/svg">
 <path d="M0 0H260V200H0V0Z" fill="white"/>
-<path fillRule="evenodd" clipRule="evenodd" d="M121.869 142.5C121.869 140.567 123.436 139 125.369 139H170.197C172.406 139 174.197 140.791 174.197 143C174.197 145.209 175.988 147 178.197 147H188.251C190.258 147 191.885 148.627 191.885 150.634C191.885 152.641 190.258 154.268 188.251 154.268H176.563C175.256 154.268 174.197 155.327 174.197 156.634C174.197 157.941 175.256 159 176.563 159H184H194.322C195.928 159 197.229 160.302 197.229 161.907C197.229 163.513 195.928 164.814 194.322 164.814H188.593C186.056 164.814 184 166.871 184 169.407C184 171.944 181.944 174 179.407 174H134H117H115.383C113.451 174 111.885 175.566 111.885 177.497C111.885 179.429 110.319 180.995 108.388 180.995H80.9973C78.7896 180.995 77 179.205 77 176.997V176.5C77 174.567 78.567 173 80.5 173H80.7705C82.5541 173 84 171.554 84 169.77C84 167.987 82.5541 166.541 80.7705 166.541H69.2705C67.4642 166.541 66 165.077 66 163.27C66 161.464 67.4642 160 69.2705 160H81C82.6569 160 84 158.657 84 157C84 155.343 82.6569 154 81 154H76C73.7909 154 72 152.209 72 150C72 147.791 73.7909 146 76 146H84H107H118.369C120.302 146 121.869 144.433 121.869 142.5ZM156.885 182.997C156.885 180.79 155.096 179 152.888 179H125.997C123.79 179 122 180.79 122 182.997C122 185.205 123.79 186.995 125.997 186.995H152.888C155.096 186.995 156.885 185.205 156.885 182.997Z" fill="#51B6FF" fill-opacity="0.14"/>
+<path fillRule="evenodd" clipRule="evenodd" d="M121.869 142.5C121.869 140.567 123.436 139 125.369 139H170.197C172.406 139 174.197 140.791 174.197 143C174.197 145.209 175.988 147 178.197 147H188.251C190.258 147 191.885 148.627 191.885 150.634C191.885 152.641 190.258 154.268 188.251 154.268H176.563C175.256 154.268 174.197 155.327 174.197 156.634C174.197 157.941 175.256 159 176.563 159H184H194.322C195.928 159 197.229 160.302 197.229 161.907C197.229 163.513 195.928 164.814 194.322 164.814H188.593C186.056 164.814 184 166.871 184 169.407C184 171.944 181.944 174 179.407 174H134H117H115.383C113.451 174 111.885 175.566 111.885 177.497C111.885 179.429 110.319 180.995 108.388 180.995H80.9973C78.7896 180.995 77 179.205 77 176.997V176.5C77 174.567 78.567 173 80.5 173H80.7705C82.5541 173 84 171.554 84 169.77C84 167.987 82.5541 166.541 80.7705 166.541H69.2705C67.4642 166.541 66 165.077 66 163.27C66 161.464 67.4642 160 69.2705 160H81C82.6569 160 84 158.657 84 157C84 155.343 82.6569 154 81 154H76C73.7909 154 72 152.209 72 150C72 147.791 73.7909 146 76 146H84H107H118.369C120.302 146 121.869 144.433 121.869 142.5ZM156.885 182.997C156.885 180.79 155.096 179 152.888 179H125.997C123.79 179 122 180.79 122 182.997C122 185.205 123.79 186.995 125.997 186.995H152.888C155.096 186.995 156.885 185.205 156.885 182.997Z" fill="#51B6FF" fillOpacity="0.14"/>
 <g filter="url(#filter0_d)">
 <path d="M85.1004 113.526C84.7824 111.129 86.6476 109 89.0657 109H163.621C165.782 109 167.553 110.717 167.619 112.878L168.874 153.878C168.943 156.134 167.133 158 164.876 158H94.5044C92.4986 158 90.8029 156.514 90.5392 154.526L85.1004 113.526Z" fill="url(#paint0_linear)"/>
 </g>
@@ -76,11 +76,11 @@ class Illustration extends React.Component{
 <g filter="url(#filter2_d)">
 <circle cx="103.911" cy="28.6738" r="7.5" transform="rotate(-12.3729 103.911 28.6738)" fill="white"/>
 </g>
-<circle cx="103.911" cy="28.6738" r="6.5" transform="rotate(-12.3729 103.911 28.6738)" fill="black" fill-opacity="0.8"/>
+<circle cx="103.911" cy="28.6738" r="6.5" transform="rotate(-12.3729 103.911 28.6738)" fill="black" fillOpacity="0.8"/>
 <g filter="url(#filter3_d)">
 <circle cx="107.768" cy="46.2557" r="7.5" transform="rotate(-12.3729 107.768 46.2557)" fill="white"/>
 </g>
-<circle cx="107.768" cy="46.2557" r="6.5" transform="rotate(-12.3729 107.768 46.2557)" fill="black" fill-opacity="0.3"/>
+<circle cx="107.768" cy="46.2557" r="6.5" transform="rotate(-12.3729 107.768 46.2557)" fill="black" fillOpacity="0.3"/>
 <g filter="url(#filter4_d)">
 <circle cx="111.625" cy="63.8378" r="7.5" transform="rotate(-12.3729 111.625 63.8378)" fill="white"/>
 </g>
@@ -125,7 +125,7 @@ class Illustration extends React.Component{
 </g>
 <g filter="url(#filter14_d)">
 <rect x="64.8456" y="85.6332" width="10" height="10" rx="2" transform="rotate(-43.0529 64.8456 85.6332)" fill="white"/>
-<rect x="66.259" y="85.6813" width="8" height="8" rx="1" transform="rotate(-43.0529 66.259 85.6813)" fill="#1891FB" fill-opacity="0.3"/>
+<rect x="66.259" y="85.6813" width="8" height="8" rx="1" transform="rotate(-43.0529 66.259 85.6813)" fill="#1891FB" fillOpacity="0.3"/>
 </g>
 <g filter="url(#filter15_d)">
 <rect x="81.2297" y="103.171" width="10" height="10" rx="2" transform="rotate(-43.0529 81.2297 103.171)" fill="white"/>
@@ -141,7 +141,7 @@ class Illustration extends React.Component{
 </g>
 <g filter="url(#filter18_d)">
 <rect x="73.6144" y="77.4412" width="10" height="10" rx="2" transform="rotate(-43.0529 73.6144 77.4412)" fill="white"/>
-<rect x="75.0278" y="77.4893" width="8" height="8" rx="1" transform="rotate(-43.0529 75.0278 77.4893)" fill="#7B61FF" fill-opacity="0.4"/>
+<rect x="75.0278" y="77.4893" width="8" height="8" rx="1" transform="rotate(-43.0529 75.0278 77.4893)" fill="#7B61FF" fillOpacity="0.4"/>
 </g>
 <g filter="url(#filter19_d)">
 <rect x="89.9985" y="94.9785" width="10" height="10" rx="2" transform="rotate(-43.0529 89.9985 94.9785)" fill="white"/>
@@ -425,7 +425,7 @@ class Illustration extends React.Component{
 </linearGradient>
 <linearGradient id="paint1_linear" x1="131" y1="104" x2="166" y2="156.5" gradientUnits="userSpaceOnUse">
 <stop stopColor="#5BBDFF"/>
-<stop offset="1" stop-color="#A9DCFF"/>
+<stop offset="1" stopColor="#A9DCFF"/>
 </linearGradient>
 <linearGradient id="paint2_linear" x1="131" y1="104" x2="131" y2="160" gradientUnits="userSpaceOnUse">
 <stop offset="0.046875" stopColor="#18A0FB"/>
@@ -438,13 +438,50 @@ class Illustration extends React.Component{
 </defs>
 </svg>
         )
+    }   
+}
+
+class Chessbox extends React.Component {
+    render() {
+        return(
+<svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g clipPath="url(#clip0)">
+<rect width="16" height="16" rx="2" fill="white"/>
+<rect x="14" y="-1" width="3" height="3" fill="#E1E1E1"/>
+<rect x="14" y="5" width="3" height="3" fill="#E1E1E1"/>
+<rect x="14" y="11" width="3" height="3" fill="#E1E1E1"/>
+<rect x="11" y="2" width="3" height="3" fill="#E1E1E1"/>
+<rect x="11" y="8" width="3" height="3" fill="#E1E1E1"/>
+<rect x="11" y="14" width="3" height="3" fill="#E1E1E1"/>
+<rect x="8" y="-1" width="3" height="3" fill="#E1E1E1"/>
+<rect x="8" y="5" width="3" height="3" fill="#E1E1E1"/>
+<rect x="8" y="11" width="3" height="3" fill="#E1E1E1"/>
+<rect x="5" y="2" width="3" height="3" fill="#E1E1E1"/>
+<rect x="5" y="8" width="3" height="3" fill="#E1E1E1"/>
+<rect x="5" y="14" width="3" height="3" fill="#E1E1E1"/>
+<rect x="2" y="-1" width="3" height="3" fill="#E1E1E1"/>
+<rect x="2" y="5" width="3" height="3" fill="#E1E1E1"/>
+<rect x="2" y="11" width="3" height="3" fill="#E1E1E1"/>
+<rect x="-1" y="2" width="3" height="3" fill="#E1E1E1"/>
+<rect x="-1" y="8" width="3" height="3" fill="#E1E1E1"/>
+<rect x="-1" y="14" width="3" height="3" fill="#E1E1E1"/>
+</g>
+<defs>
+<clipPath id="clip0">
+<rect width="16" height="16" rx="2" fill="white"/>
+</clipPath>
+</defs>
+</svg>
+        )
     }
     
-}
+  }
+  
 export {
   Loading,
   LoadingWhite,
   Selection,
   Perfect,
-  Illustration
+  Illustration,
+  Chessbox
 }

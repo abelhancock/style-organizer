@@ -5,6 +5,7 @@ figma.showUI(__html__, {width:610, height:560})
 //traverse through all elements
 let counter = 0;
 let fillsUsage = [];
+let mergeSelection = []
 
 function isSameFill(fill1, fill2){
     if (fill1.length != fill2.length){return false}
@@ -70,7 +71,8 @@ function traverse(node) {
             let styleId = node.fillStyleId.toString();
             var localStyle = figma.getStyleById(styleId);
             if (localStyle===null){
-                styleId = "unlinked" + JSON.stringify(arranged)
+                styleId = "unlinked"
+                if (fillIndex === -1){styleId += JSON.stringify(arranged)}else{styleId += JSON.stringify(fillsUsage[fillIndex].fills)}
             }else if (localStyle.remote===true){
                 styleId="Team "+styleId
             }else{
@@ -177,14 +179,18 @@ function getTargetStyleId(styles){
     return targetStyleId
 }
 
-figma.ui.onmessage = msg => {
+figma.ui.onmessage = async(msg) => {
+    await figma.loadFontAsync({ family: "Roboto", style: "Regular" })
+    await figma.loadFontAsync({ family: "Roboto", style: "Bold" })
     switch (msg.type) {
         case "scan":
-            counter = 0;
-            fillsUsage = [];
-            traverse(figma.currentPage)        
-            fillsUsage.sort((a, b) => (a.total < b.total) ? 1 : -1);        
-            figma.ui.postMessage({type:"count", value: fillsUsage, localStyles: figma.getLocalPaintStyles()});
+            counter = 0
+            fillsUsage = []
+            mergeSelection = []
+            traverse(figma.currentPage) 
+            fillsUsage.sort((a, b) => (a.total < b.total) ? 1 : -1);   
+            fillsUsage.forEach((fill)=>{mergeSelection.push(getTargetStyleId(fill.styles))})  
+            figma.ui.postMessage({type:"count", value: fillsUsage, mergeSelection: mergeSelection});
             break;
         case "merge link":
             let targetFills = msg.data.fills;
@@ -208,6 +214,9 @@ figma.ui.onmessage = msg => {
                 if (key!=targetStyle){                    
                     msg.data.styles[key].nodes.forEach((id)=>{
                         let selectNode = figma.getNodeById(id.slice(7))
+                        if(selectNode === null){
+                            figma.notify("You have modified the page. Please refresh.", {timeout: 2000})
+                        }
                         if ("fills" in selectNode && id.slice(0,7) === "fills  "){
                             selectNode.fills = targetFills
                             selectNode.fillStyleId = targetStyle.slice(5)
@@ -243,13 +252,80 @@ figma.ui.onmessage = msg => {
         case "select style":
             let selected = []
             for (let id of msg.data){
-                selected.push(figma.getNodeById(id.slice(7)))
+                if(figma.getNodeById(id.slice(7)) === null){
+                    figma.notify("You have modified the page. Please refresh.", {timeout: 2000})
+                }else{
+                    selected.push(figma.getNodeById(id.slice(7)))
+                }
             }
             figma.currentPage.selection = selected;
             figma.viewport.scrollAndZoomIntoView(selected);
             figma.ui.postMessage({type:"select style", id: msg.id});
             figma.notify(selected.length.toString()+" elements selected.", {timeout: 2000})
             break;
+        case "generate":
+            let palette = []
+            let paletteGroup =[]
+            let paletteCounter = 0
+            fillsUsage.forEach((paint, index)=>{
+                if (mergeSelection[index].slice(0,8) != 'unlinked'){
+                    let x = (paletteCounter % 6) * 290
+                    let y = Math.floor(paletteCounter/6) * 140
+                    let rect = figma.createRectangle()
+                    rect.x = x
+                    rect.y = y
+                    rect.fills = paint.fills
+                    rect.fillStyleId = mergeSelection[index].slice(5)
+                    let name = figma.createText()
+                    name.characters = paint.styles[mergeSelection[index]].name
+                    name.x = x + 116
+                    name.y = y
+                    name.fontSize = 16
+                    name.fontName = { family: "Roboto", style: "Bold" }
+                    name.resize(150, 20)
+                    let groupNodes = [rect, name]
+                    paint.fills.forEach((fill, index) => {
+                        let value = figma.createText()
+                        switch (fill.type) {
+                            case "SOLID":
+                                value.characters = colorToHex(fill.color)
+                                break
+                            case "GRADIENT_LINEAR":
+                            case "GRADIENT_RADIAL":
+                            case "GRADIENT_ANGULAR":
+                            case "GRADIENT_DIAMOND":
+                                value.characters = fill.type.slice(9,10)+fill.type.slice(10).toLowerCase()
+                                break
+                            default:
+                                value.characters = "Unkown Style"
+                                break;                        
+                        }
+                        value.x = x + 116
+                        value.y = y + 40 + index * 20
+                        value.fontSize = 14
+                        value.fontName = { family: "Roboto", style: "Regular" }
+                        value.resize(60, 16)
+                        groupNodes.push(value)
+                        let opacity = figma.createText()
+                        opacity.characters = (fill.opacity*100).toFixed(2).replace(/\.0+$/,'')+"%"  
+                        opacity.x = x + 176
+                        opacity.y = y + 40 + index * 20
+                        opacity.fontSize = 14
+                        opacity.fontName = { family: "Roboto", style: "Regular" }
+                        opacity.resize(60, 16)
+                        groupNodes.push(opacity)
+
+                    });
+                    palette.push(figma.group(groupNodes,figma.currentPage))
+                    paletteCounter ++;
+                }
+            })
+            if (palette.length != 0){
+                paletteGroup.push(figma.group(palette, figma.currentPage))
+                figma.currentPage.appendChild(paletteGroup[0])
+                figma.currentPage.selection = paletteGroup
+                figma.viewport.scrollAndZoomIntoView(paletteGroup)
+            }
         default:
             break;
     }

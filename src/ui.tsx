@@ -13,6 +13,7 @@ interface AppState {
   data: any,
   refreshLoading: any
   selectedStyle: any
+  mergeSelection: any
   initial: any
 }
 
@@ -24,6 +25,7 @@ class App extends React.Component<AppProps, AppState> {
       data: [],
       refreshLoading: false,
       selectedStyle: "",
+      mergeSelection: [],
       initial: true,
     }
 }
@@ -41,6 +43,7 @@ class App extends React.Component<AppProps, AppState> {
         case "count":
           this.setState({
             data: event.data.pluginMessage.value,
+            mergeSelection: event.data.pluginMessage.mergeSelection,
             refreshLoading: false,
             initial: false
           })
@@ -67,12 +70,16 @@ class App extends React.Component<AppProps, AppState> {
     parent.postMessage({ pluginMessage: { type: 'scan'} }, '*')
   }
 
+  onGeneratePalette = () => {
+    parent.postMessage({ pluginMessage: { type: 'generate'} }, '*')
+  }
+
   onCancel = () => {
     parent.postMessage({ pluginMessage: { type: 'cancel' } }, '*')
   } 
 
   render() {
-    let tableRows = this.state.data.map((row, index)=><StyleRow data={row} selectedStyle={this.state.selectedStyle} rowIndex={index} key={index}/>)
+    let tableRows = this.state.data.map((row, index)=><StyleRow data={row} selectedStyle={this.state.selectedStyle} rowIndex={index} mergeSelection={this.state.mergeSelection[index]} key={index}/>)
     return<div>
       {this.state.initial?
         <div>
@@ -113,12 +120,23 @@ class App extends React.Component<AppProps, AppState> {
             {tableRows.length === 0?<div className="empty-table">No styles detected</div>:null}
           </div>
           <div className="bottom-bar">
+            <div className="bottom-message">
+              <div>{tableRows.length} in total</div>
+            </div>
+            <div className="button-wrapper">
+              <Button
+                  type = "button-primary"
+                  text = "Generate Palette"
+                  onClick = {this.onGeneratePalette} 
+                  loadingState = {false}      
+              />
+            </div>
             <div className="button-wrapper">
               <Button
                   type = "button-secondary"
                   text = "Refresh"
                   onClick = {this.onScan} 
-                  loadingState = {this.state.refreshLoading}     
+                  loadingState = {this.state.refreshLoading}   
               />
             </div>
           </div>

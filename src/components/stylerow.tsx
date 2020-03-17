@@ -1,12 +1,12 @@
 import * as React from 'react'
-import {colorToHex} from '../helpers'
+import {colorToHex, getMatrix} from '../helpers'
 import Button from '../components/button'
-import {Selection, Perfect} from '../components/icons'
+import {Selection, Perfect, Chessbox} from '../components/icons'
 
 interface AppState {
 }
 
-class StyleRow extends React.Component <{data, selectedStyle, rowIndex}, AppState>{
+class StyleRow extends React.Component <{data, selectedStyle, rowIndex, mergeSelection}, AppState>{
     constructor(props) {
         super(props);
     }
@@ -25,10 +25,15 @@ class StyleRow extends React.Component <{data, selectedStyle, rowIndex}, AppStat
             let fill = this.props.data.fills[i];
             switch (fill.type) {
                 case "SOLID":
-                    let colorRGBA = "rgba("+ (fill.color.r*255).toString()+","+(fill.color.g*255).toString()+","+(fill.color.b*255).toString()+","+fill.opacity.toString()
+                    let colorRGBA = "rgba("+ (fill.color.r*255).toString()+","+(fill.color.g*255).toString()+","+(fill.color.b*255).toString()+","+fill.opacity.toString()+")"
+                    let colorOpaque = "rgba("+ (fill.color.r*255).toString()+","+(fill.color.g*255).toString()+","+(fill.color.b*255).toString()+",1)"
                     fillRows.push(                
                         <div className="item-line" key={i}>
-                            <div className="color-box" style={{backgroundColor:colorRGBA}}></div>
+                            <div className="color-box">
+                                <div className="color-full"><Chessbox/></div>
+                                <div className="color-opaque" style={{backgroundColor:colorOpaque}}></div>
+                                <div className="color-rgba" style={{backgroundColor:colorRGBA}}></div>
+                            </div>
                             <div className="hex-value">{colorToHex(fill.color)}</div>
                             <div className="opacity">{(fill.opacity*100).toFixed(2).replace(/\.0+$/,'')+"%"}</div>
                         </div>
@@ -37,11 +42,41 @@ class StyleRow extends React.Component <{data, selectedStyle, rowIndex}, AppStat
 
                 case "GRADIENT_LINEAR":
                 case "GRADIENT_RADIAL":
+                    let gradientStops = []
+                    let colorGradient = null
+                    fill.gradientStops.forEach((stop, index)=>{
+                        gradientStops.push(<stop key = {index} offset={(stop.position * 100).toString()+"%"} stopColor={"rgba("+(stop.color.r*255).toString()+","+(stop.color.g*255).toString()+","+(stop.color.b*255).toString()+","+stop.color.a.toString()+")"}/>)
+                    })
+                    if (fill.type === "GRADIENT_LINEAR"){
+                        colorGradient = <linearGradient id={"fill"+this.props.rowIndex.toString()+i.toString()} gradientTransform={getMatrix(fill.gradientTransform)}>{gradientStops}</linearGradient>
+                    }else{
+                        colorGradient = <radialGradient id={"fill"+this.props.rowIndex.toString()+i.toString()} gradientTransform={getMatrix(fill.gradientTransform)}>{gradientStops}</radialGradient>
+                    }
+                    fillRows.push(
+                        <div className="item-line" key={i}>
+                            <div className="color-box">
+                                <div className="color-full"><Chessbox/></div>
+                                <div className="color-full">
+                                    <svg viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg">
+                                        {colorGradient}
+                                        <rect x="0" y="0" width="16" height="16" fill={"url(#fill"+this.props.rowIndex.toString()+i.toString()+")"} transform="scale(1 -1) translate(0 -16)"/>
+                                    </svg>
+                                </div>
+                            </div>
+                            <div className="hex-value">{fill.type.slice(9,10)+fill.type.slice(10).toLowerCase()}</div>
+                            <div className="opacity">{(fill.opacity*100).toFixed(2).replace(/\.0+$/,'')+"%"}</div>
+                        </div>
+                    )
+                    break;
                 case "GRADIENT_ANGULAR":
                 case "GRADIENT_DIAMOND":
                     fillRows.push(
                         <div className="item-line" key={i}>
-                            {fill.type.slice(9,10)+fill.type.slice(10).toLowerCase()}
+                            <div className="color-box">
+                                <div className="color-full"><Chessbox/></div>
+                            </div>
+                            <div className="hex-value">{fill.type.slice(9,10)+fill.type.slice(10).toLowerCase()}</div>
+                            <div className="opacity">{(fill.opacity*100).toFixed(2).replace(/\.0+$/,'')+"%"}</div>
                         </div>
                     )
                     break;
@@ -74,7 +109,7 @@ class StyleRow extends React.Component <{data, selectedStyle, rowIndex}, AppStat
                 )
             }else if (styleId[i].slice(0,5) === "Team "){ 
                 styleRows.push(
-                    <div className="item-line style-row" onClick={(e)=>this.handleSelection(currentStyle, currentStyleId)} key={i}>
+                    <div className={styleId[i] === this.props.mergeSelection && styleId.length != 1?"item-line style-row merge-selection":"item-line style-row"} onClick={(e)=>this.handleSelection(currentStyle, currentStyleId)} key={i}>
                         <div className="tag tag-team">Team</div>
                         <div className="style-name">{currentStyle.name}</div>
                         <div className="style-usage" key={i}>{currentStyle.count} used</div>
@@ -83,7 +118,7 @@ class StyleRow extends React.Component <{data, selectedStyle, rowIndex}, AppStat
                 )
             }else if (styleId[i].slice(0,5) === "Local"){
                 styleRows.push(
-                    <div className="item-line style-row" onClick={(e)=>this.handleSelection(currentStyle, currentStyleId)} key={i}>
+                    <div className={styleId[i] === this.props.mergeSelection && styleId.length != 1?"item-line style-row merge-selection":"item-line style-row"} onClick={(e)=>this.handleSelection(currentStyle, currentStyleId)} key={i}>
                         <div className="tag tag-local">Local</div>
                         <div className="style-name">{currentStyle.name}</div>
                         <div className="style-usage" key={i}>{currentStyle.count} used</div>
@@ -117,7 +152,7 @@ class StyleRow extends React.Component <{data, selectedStyle, rowIndex}, AppStat
                 actionButton.push(
                     <div className="button-wrapper" key="1">
                         <Button
-                            type = "button-primary"
+                            type = "button-secondary"
                             text = "Create Style"
                             onClick = {()=>this.handleFix(this.props.data, "create", this.props.rowIndex)}
                             loadingState = {false}      
